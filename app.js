@@ -1,12 +1,13 @@
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
+require("dotenv").config();
 
 // подключаем роут
 const contactsRouter = require('./routes/api/contacts');
 
 // создается экземпляр приложения (app веб-сервер)
-const app = express();
+const app = express(); // app - это и есть веб-сервер
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 
@@ -23,7 +24,7 @@ app.use((req, res) => {
   res.status(404).json({ message: 'Not found' })
 });
 
-// потом обработка ошибок (порядок подключаемого промежуточного ПО имеет значение)
+// потом обработка ошибок сервера (порядок подключаемого промежуточного ПО имеет значение)
 app.use((err, req, res, next) => {
   const {status = 500, message = "Server error"} = err;
   res.status(status).json({ message })
