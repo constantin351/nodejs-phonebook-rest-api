@@ -22,8 +22,13 @@ const contactSchema = Schema({
         type: Boolean,
         default: false,
     },
+    owner: {
+        type: Schema.Types.ObjectId, // тут сохраряется _id owner-a из коллекции user (генерируемый MongoDB)
+        ref: 'user', // user - название коллекции, из которой взят этот _id
+        required: true, //
+    },
 }, {versionKey: false, timestamps: true}); 
-// {versionKey: false, timestamps: true} убирает __v из док-та и добавляет дату создания(createdAt) и дату обновления(updatedAt)
+// {versionKey: false, timestamps: true} убирает версию __v из док-та и добавляет дату создания(createdAt) и дату обновления(updatedAt)
 
 // ф-ция обработки ошибки для всех схем
 contactSchema.post("save", handleMongooseError);

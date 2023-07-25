@@ -3,7 +3,8 @@ const logger = require('morgan');
 const cors = require('cors');
 require("dotenv").config();
 
-// подключаем роут
+// подключаем роуты
+const authRouter = require("./routes/api/auth");
 const contactsRouter = require('./routes/api/contacts');
 
 // создается экземпляр приложения (app веб-сервер)
@@ -16,7 +17,8 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
-// подключение роута в приложение
+// подключение роутов в приложение
+app.use('/api/auth', authRouter); // добавлено в hw-04
 app.use('/api/contacts', contactsRouter);
 
 // сначала обработка несуществующего роута или ошибка 404
