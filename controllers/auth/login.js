@@ -19,11 +19,14 @@ const login = async (req, res) => {
     if (!passwordCompare) {
         throw HttpError(401, `Email ${email} or password is wrong`)
     };
-
+    
+    //  создаем payload (обьект с _id юзера)
     const payload = {id: user._id};
 
+    // создаем токен
     const token = jwt.sign(payload, SECRET_KEY, {expiresIn: "48h" });
 
+    // прикрепляем токен к обьекту юзера (для дальнейших запросов с токеном)
     await User.findByIdAndUpdate(user._id, {token});
 
     res.status(200).json({
