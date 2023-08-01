@@ -17,6 +17,7 @@ const register = async (req, res) => {
     // генерируем ссылку на временную аватарку юзера (передаем имейл регистрируемого юзера)
     const avatarUrl = gravatar.url(email); 
 
+    // сохраняем временную аватарку юзера в базе (в обьект нового юзера)
     const newUser = await User.create({...req.body, password: hashedPassword, avatarURL: avatarUrl});
 
     res.status(201).json ({

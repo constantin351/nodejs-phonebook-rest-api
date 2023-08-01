@@ -22,7 +22,8 @@ router.get("/users/current", authenticate, cntrl.getCurrentUser);
 router.patch("/users/current/subscription", authenticate, validateBodyWithJoi(schemas.subscriptionJoiSchema), cntrl.updateSubscription);
 
 // обновление аватара залогиненным юзером
-// upload.single("avatar") загружает один файл с из поля формы с name "avatar" во временную папку "tmp", а инфо о файле сохранется в req.file
+// upload.single("avatar") загружает один (single) файл из поля формы с name "avatar" во временную папку "tmp", а инфо о файле сохранется в req.file
+// все остальные (текстовые) поля запишутся в req.body
 router.patch("/users/avatars", authenticate, upload.single("avatar"), cntrl.updateAvatar);
 
 module.exports = router;
