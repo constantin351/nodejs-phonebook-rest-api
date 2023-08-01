@@ -17,6 +17,9 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
+// MDLWARE: если придет запрос за файлом - бери его из папки "public"
+app.use(express.static("public"));
+
 // подключение роутов в приложение
 app.use('/api/auth', authRouter); // добавлено в hw-04
 app.use('/api/contacts', contactsRouter);

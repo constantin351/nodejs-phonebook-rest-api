@@ -1,4 +1,6 @@
 const bcrypt = require("bcrypt");
+const gravatar = require("gravatar");
+
 const { User } = require("../../models/user");
 
 const { HttpError } = require("../../helpers");
@@ -12,8 +14,11 @@ const register = async (req, res) => {
     };
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    // генерируем ссылку на временную аватарку юзера (передаем имейл регистрируемого юзера)
+    const avatarUrl = gravatar.url(email); 
 
-    const newUser = await User.create({...req.body, password: hashedPassword});
+    // сохраняем временную аватарку юзера в базе (в обьект нового юзера)
+    const newUser = await User.create({...req.body, password: hashedPassword, avatarURL: avatarUrl});
 
     res.status(201).json ({
         status: "success",

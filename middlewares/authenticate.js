@@ -15,11 +15,13 @@ const authenticate = async (req, res, next) => {
     };
 
     try {
+        // если токен валидный и не протух - мы берем id из payload
         const {id} = jwt.verify(token, SECRET_KEY);
+        // по id проверяем, есть ли такой юзер в базе
         const user = await User.findById(id);
 
         // если нет user с таким токеном или у него нет токена или 
-        // его токен не совпадает с токеном, полученным из req.headers
+        // его токен не совпадает с токеном, полученным из req.headers (зашел с другого гаджета)
         if (!user || !user.token || user.token !== token) { 
             next(HttpError(401, "Not authorized"));
         }
