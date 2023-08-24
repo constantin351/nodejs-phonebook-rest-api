@@ -4,6 +4,11 @@ const cors = require('cors');
 // импортируем и вызываем dotenv
 require("dotenv").config();
 
+// добавил перед командным проектом
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+//
+
 // подключаем роуты
 const authRouter = require("./routes/api/auth");
 const contactsRouter = require('./routes/api/contacts');
@@ -20,6 +25,10 @@ app.use(express.json());
 
 // MDLWARE: если придет запрос за файлом - бери его из папки "public"
 app.use(express.static("public"));
+
+// добавил перед командным проектом
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+//
 
 // подключение роутов в приложение
 app.use('/api/auth', authRouter); // добавлено в hw-04
